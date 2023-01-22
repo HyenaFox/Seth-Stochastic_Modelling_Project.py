@@ -85,23 +85,94 @@ for i in range(2900):
 
 def CorrectForNextExit(Exit, OnRamp):
     NotEqual = len(CorrectCarList) != SixToSevenTotal[Exit]
+    CarsGettingOffHere = []
+    CarsGettingOnHere = []
     while NotEqual:
-        NotEqual = len(CorrectCarList) != SixToSevenTotal[Exit]
+        # NotEqual = len(CorrectCarList) != SixToSevenTotal[Exit]
         LessThanNeeded = len(CorrectCarList) < SixToSevenTotal[Exit]
         GreaterThanNeeded = len(CorrectCarList) > SixToSevenTotal[Exit]
         if LessThanNeeded:
             Difference = SixToSevenTotal[Exit] - len(CorrectCarList)
             for i in range(Difference):
-                CorrectCarList.append(AddCar(Exit))
+                NewCar = AddCar(OnRamp)
+                NewCar = NewCar[0]
+                CorrectCarList.append(NewCar)
+                CarsGettingOnHere.append(NewCar)
+            print()
+            YellowCars = []
+            BlueCars = []
+            GreenCars = []
+            RedCars = []
+            PurpleCars = []
+            NumberCarsGetOnHere = len(CarsGettingOnHere)
+            for i in range(len(CarsGettingOnHere)):
+                if CarsGettingOnHere[i][1] == "Yellow":
+                    YellowCars.append(CarsGettingOnHere[i])
+                if CarsGettingOnHere[i][1] == "Blue":
+                    BlueCars.append(CarsGettingOnHere[i])
+                if CarsGettingOnHere[i][1] == "Green":
+                    GreenCars.append(CarsGettingOnHere[i])
+                if CarsGettingOnHere[i][1] == "Red":
+                    RedCars.append(CarsGettingOnHere[i])
+                if CarsGettingOnHere[i][1] == "Purple":
+                    PurpleCars.append(CarsGettingOnHere[i])
+            NumPurples = len(PurpleCars)
+            NumGreens = len(GreenCars)
+            NumBlues = len(BlueCars)
+            NumYellows = len(YellowCars)
+            NumReds = len(RedCars)
+            Reports = (f"At Exit Number {Exit}, "
+                       f"{NumberCarsGetOnHere} cars entered the highway. \n"
+                       f"Of the cars that got on, there were "
+                       f"{NumYellows} yellow cars, {NumBlues} blue cars, "
+                       f"{NumGreens} green cars, {NumReds} red cars, "
+                       f"and {NumPurples} purple cars. \n"
+                       f"There are now {len(CorrectCarList)} cars on the highway.")
+
         if GreaterThanNeeded:
             Difference = len(CorrectCarList) - SixToSevenTotal[Exit]
             for i in range(Difference):
-                CorrectCarList.pop()
-    return CorrectCarList
+                CarLeaving = (CorrectCarList.pop())[0]
+                CarsGettingOffHere.append(CarLeaving)
+            YellowCars = []
+            BlueCars = []
+            GreenCars = []
+            RedCars = []
+            PurpleCars = []
+            NumberCarsGetOffHere = len(CarsGettingOffHere)
+            for i in range(len(CarsGettingOffHere)):
+                if CarsGettingOffHere[i][1] == "Yellow":
+                    YellowCars.append(CarsGettingOffHere[i])
+                if CarsGettingOffHere[i][1] == "Blue":
+                    BlueCars.append(CarsGettingOffHere[i])
+                if CarsGettingOffHere[i][1] == "Green":
+                    GreenCars.append(CarsGettingOffHere[i])
+                if CarsGettingOffHere[i][1] == "Red":
+                    RedCars.append(CarsGettingOffHere[i])
+                if CarsGettingOffHere[i][1] == "Purple":
+                    PurpleCars.append(CarsGettingOffHere[i])
+            NumPurples = len(PurpleCars)
+            NumGreens = len(GreenCars)
+            NumBlues = len(BlueCars)
+            NumYellows = len(YellowCars)
+            NumReds = len(RedCars)
+            Reports = (f"At Exit Number {Exit}, "
+                             f"{NumberCarsGetOffHere} cars exited the highway. \n"
+                             f"Of the cars that got off, there were "
+                             f"{NumYellows} yellow cars, {NumBlues} blue cars, "
+                             f"{NumGreens} green cars, {NumReds} red cars, "
+                             f"and {NumPurples} purple cars. \n"
+                             f"There are {len(CorrectCarList)} cars remaining.")
+
+        return CorrectCarList, Reports
 
 
-CorrectCarList = CorrectForNextExit(3, 1)
+NCarList = CorrectForNextExit(3, 1)
+CorrectCarList = NCarList[0]
+Reports = NCarList[1]
+
 print(len(CorrectCarList))
+print(Reports)
 
 # while len(CorrectCarList) > SixToSevenTotal[1]:
 #     Difference = len(CorrectCarList) - SixToSevenTotal[i]
