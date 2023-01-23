@@ -25,8 +25,8 @@ NewData = {
                    CustomChanges[5], CustomChanges[6], CustomChanges[7], CustomChanges[8], CustomChanges[9]]
 }
 
-NewData['6-7 TOTAL'] = [sum([StartingTotal] + NewData['6-7 CHANGE'][1:i+1]) for i in range(len(NewData['6-7 CHANGE']))]
-
+NewData['6-7 TOTAL'] = [sum([StartingTotal] + NewData['6-7 CHANGE'][1:i + 1]) for i in
+                        range(len(NewData['6-7 CHANGE']))]
 
 df = pd.DataFrame(NewData)
 
@@ -101,6 +101,7 @@ def CorrectForNextExit(Exit, OnRamp):
     NotEqual = len(CorrectCarList) != SixToSevenTotal[Exit]
     CarsGettingOffHere = []
     CarsGettingOnHere = []
+    Reports = []
     while NotEqual:
         # NotEqual = len(CorrectCarList) != SixToSevenTotal[Exit]
         LessThanNeeded = len(CorrectCarList) < SixToSevenTotal[Exit]
@@ -176,6 +177,11 @@ def CorrectForNextExit(Exit, OnRamp):
                        f"{NumGreens} green cars, {NumReds} red cars, "
                        f"and {NumPurples} purple cars. \n"
                        f"There are {len(CorrectCarList)} cars remaining.")
+        if len(Reports) == 0:
+            Reports.append(["You are at the last stop, which is theoretically impossible, because this code will "
+                            "never reach this. It is a mathematical impossibility. This should be impossible, "
+                            "this line is just here so that it prints... SOMETHING instead of an error. You know that "
+                            "feeling, don't you, dear reader?"])
         return CorrectCarList, Reports
 
 
