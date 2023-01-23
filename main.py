@@ -4,15 +4,28 @@ import pandas as pd
 import csv
 
 # TODO: MAKE IT GENERALIZABLE
-StartingTotal = 3100
+StartingTotal = 4400
+CustomChange1 = randrange(-1000, 1000)
+CustomChange2 = randrange(-1000, 1000)
+CustomChange3 = randrange(-1000, 1000)
+CustomChange4 = randrange(-1000, 1000)
+CustomChange5 = randrange(-1000, 1000)
+CustomChange6 = randrange(-1000, 1000)
+CustomChange7 = randrange(-1000, 1000)
+CustomChange8 = randrange(-1000, 1000)
+CustomChange9 = randrange(-1000, 1000)
+OriginalChanges = [0, -650, 400, 700, -300, 350, -150, 250, -150, 850]
+
+CustomChanges = [0, CustomChange1, CustomChange2, CustomChange3, CustomChange4, CustomChange5, CustomChange6,
+                 CustomChange7, CustomChange8, CustomChange9]
+
 NewData = {
     'Highway Segment': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    '6-7 CHANGE': [0, -650, 400, 700, -300, 350, 0 - 150, 250, 0 - 150, 850],
+    '6-7 CHANGE': [CustomChanges[0], CustomChanges[1], CustomChanges[2], CustomChanges[3], CustomChanges[4],
+                   CustomChanges[5], CustomChanges[6], CustomChanges[7], CustomChanges[8], CustomChanges[9]]
 }
 
 NewData['6-7 TOTAL'] = [sum([StartingTotal] + NewData['6-7 CHANGE'][1:i+1]) for i in range(len(NewData['6-7 CHANGE']))]
-
-print(NewData['6-7 TOTAL'])
 
 
 df = pd.DataFrame(NewData)
