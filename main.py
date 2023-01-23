@@ -163,16 +163,21 @@ def CorrectForNextExit(Exit, OnRamp):
                              f"{NumGreens} green cars, {NumReds} red cars, "
                              f"and {NumPurples} purple cars. \n"
                              f"There are {len(CorrectCarList)} cars remaining.")
-
         return CorrectCarList, Reports
 
 
-NCarList = CorrectForNextExit(3, 1)
-CorrectCarList = NCarList[0]
-Reports = NCarList[1]
+# for MyIterable in range(10):
+    # FCarList = CorrectForNextExit(MyIterable, 1)
+    # print(FCarList)
+NCarList = CorrectForNextExit(1, 1)
+NNCarList = CorrectForNextExit(2, 1)
+NNNCarList = CorrectForNextExit(3, 1)
+print(NCarList[0], NNCarList[1], NNNCarList[1])
 
-print(len(CorrectCarList))
-print(Reports)
+    # CorrectCarList = NCarList[0]
+    # Reports = NCarList[1]
+    # print(len(CorrectCarList))
+    # print(Reports)
 
 # while len(CorrectCarList) > SixToSevenTotal[1]:
 #     Difference = len(CorrectCarList) - SixToSevenTotal[i]
