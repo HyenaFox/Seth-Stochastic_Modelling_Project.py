@@ -3,7 +3,7 @@ from turtle import *
 import pandas as pd
 import csv
 
-# TODO: RUN A MILLION TIMES
+# TODO: RUN A MILLION TIMES, ALSO ADD ANIMATION
 StartingTotal = 4400
 CustomChange1 = randrange(-1000, 1000)
 CustomChange2 = randrange(-1000, 1000)
