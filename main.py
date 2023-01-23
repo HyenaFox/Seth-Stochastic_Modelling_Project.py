@@ -3,8 +3,7 @@ from turtle import *
 import pandas as pd
 import csv
 
-# TODO: I have to basically make it so at the end of the day, the number of cars at each highway exit segment lines
-#  up with real life
+# TODO: MAKE IT GENERALIZABLE
 ProjectData = pd.read_csv('ProjectData.csv')
 HighwaySegmentsList = ProjectData["Highway Segment"]
 SixToSevenChanges = ProjectData["6-7 CHANGE"]
@@ -57,19 +56,6 @@ def CreateNewCar(OnRamp):
 MaxCars6To7 = SixToSevenTotal[1]
 
 
-# def SubtractAtExit(ThisExit, TotalCarsList):
-#     CarsGettingOffHere = []
-#     IndicesToRemove = []
-#     for i in range(len(TotalCarsList)):
-#         if TotalCarsList[i][2] == ThisExit:
-#             CarsGettingOffHere.append(TotalCarsList[i])
-#             IndicesToRemove.append(i)
-#     IndicesToRemove.sort(reverse=True)
-#     for i in IndicesToRemove:
-#         del TotalCarsList[i]
-#     NumCarsGettingOffHere = len(CarsGettingOffHere)
-#     return TotalCarList, CarsGettingOffHere, NumCarsGettingOffHere
-
 
 def AddCar(CurrentOnRamp):
     CarList = []
@@ -96,9 +82,8 @@ def CorrectForNextExit(Exit, OnRamp):
             for i in range(Difference):
                 NewCar = AddCar(OnRamp)
                 NewCar = NewCar[0]
-                CorrectCarList.append(NewCar)
+                CorrectCarList.append([NewCar])
                 CarsGettingOnHere.append(NewCar)
-            print()
             YellowCars = []
             BlueCars = []
             GreenCars = []
@@ -132,7 +117,7 @@ def CorrectForNextExit(Exit, OnRamp):
         if GreaterThanNeeded:
             Difference = len(CorrectCarList) - SixToSevenTotal[Exit]
             for i in range(Difference):
-                CarLeaving = (CorrectCarList.pop())[0]
+                CarLeaving = (CorrectCarList.pop())
                 CarsGettingOffHere.append(CarLeaving)
             YellowCars = []
             BlueCars = []
@@ -141,15 +126,15 @@ def CorrectForNextExit(Exit, OnRamp):
             PurpleCars = []
             NumberCarsGetOffHere = len(CarsGettingOffHere)
             for i in range(len(CarsGettingOffHere)):
-                if CarsGettingOffHere[i][1] == "Yellow":
+                if CarsGettingOffHere[i][0][1] == "Yellow":
                     YellowCars.append(CarsGettingOffHere[i])
-                if CarsGettingOffHere[i][1] == "Blue":
+                if CarsGettingOffHere[i][0][1] == "Blue":
                     BlueCars.append(CarsGettingOffHere[i])
-                if CarsGettingOffHere[i][1] == "Green":
+                if CarsGettingOffHere[i][0][1] == "Green":
                     GreenCars.append(CarsGettingOffHere[i])
-                if CarsGettingOffHere[i][1] == "Red":
+                if CarsGettingOffHere[i][0][1] == "Red":
                     RedCars.append(CarsGettingOffHere[i])
-                if CarsGettingOffHere[i][1] == "Purple":
+                if CarsGettingOffHere[i][0][1] == "Purple":
                     PurpleCars.append(CarsGettingOffHere[i])
             NumPurples = len(PurpleCars)
             NumGreens = len(GreenCars)
@@ -166,47 +151,11 @@ def CorrectForNextExit(Exit, OnRamp):
         return CorrectCarList, Reports
 
 
-# for MyIterable in range(10):
-    # FCarList = CorrectForNextExit(MyIterable, 1)
-    # print(FCarList)
-NCarList = CorrectForNextExit(1, 1)
-NNCarList = CorrectForNextExit(2, 1)
-NNNCarList = CorrectForNextExit(3, 1)
-print(NCarList[0], NNCarList[1], NNNCarList[1])
-
-    # CorrectCarList = NCarList[0]
-    # Reports = NCarList[1]
-    # print(len(CorrectCarList))
-    # print(Reports)
-
-# while len(CorrectCarList) > SixToSevenTotal[1]:
-#     Difference = len(CorrectCarList) - SixToSevenTotal[i]
-#     for x in range(Difference):
-#         CorrectCarList.pop()
-#         i += 1
-#         print("Kentucky")
-#     if len(CorrectCarList) < SixToSevenTotal[i]:
-#         Difference = SixToSevenTotal[i] - len(CorrectCarList)
-#         print(Difference)
-#         for x in range(Difference):
-#             AddCar(i)
-#         print("Brazil")
-#     print("China")
-#     i += 1
+for MyIterable in range(1, 10):
+    FCarList = CorrectForNextExit(MyIterable, 1)
+    print(FCarList[1])
 
 
-
-    #     while len(CorrectCarList) > SixToSevenTotal[i]:
-    #         CorrectCarList.remove(CorrectCarList[1])
-    #         print("China")
-    #         print(len(CorrectCarList), SixToSevenTotal[i])
-    #         CorrectCarList.append("China")
-    # else:
-    #     AddCar(i)
-    #     print("Brazil")
-    #     CorrectCarList.append("Brazil)")
-
-# MAKE THIS WORK (line up with rl)
 
 
 # def ListCreation():
@@ -220,46 +169,3 @@ print(NCarList[0], NNCarList[1], NNNCarList[1])
 #     # for i in range()
 #
 # # print(FullCarList)
-
-
-# def ListChangeReport(MaxSegments, FullCarList):
-#     Reports = []
-#     for i in range(MaxSegments):
-#         CurrentSegmentNumber = i + 1
-#         SubtractingThisTime = SubtractAtExit(i, FullCarList)
-#         NumberCarsGetOffHere = SubtractingThisTime[2]
-#         ExitingCarsList = SubtractingThisTime[1]
-#         RemainingCarsList = SubtractingThisTime[0]
-#         YellowCars = []
-#         BlueCars = []
-#         GreenCars = []
-#         RedCars = []
-#         PurpleCars = []
-#         for i in range(len(ExitingCarsList)):
-#             if ExitingCarsList[i][1] == "Yellow":
-#                 YellowCars.append(ExitingCarsList[i])
-#             if ExitingCarsList[i][1] == "Blue":
-#                 BlueCars.append(ExitingCarsList[i])
-#             if ExitingCarsList[i][1] == "Green":
-#                 GreenCars.append(ExitingCarsList[i])
-#             if ExitingCarsList[i][1] == "Red":
-#                 RedCars.append(ExitingCarsList[i])
-#             if ExitingCarsList[i][1] == "Purple":
-#                 PurpleCars.append(ExitingCarsList[i])
-#         TextReportAtI = (f"At Segment Number {CurrentSegmentNumber}, "
-#         f"{NumberCarsGetOffHere} cars exited the highway. \n"
-#         f"Of the cars that got off, there were "
-#         f"{len(YellowCars)} yellow cars, {len(BlueCars)} blue cars, "
-#         f"{len(GreenCars)}, green cars, {len(RedCars)}, red cars, and {len(PurpleCars)} purple cars. \n"
-#         f"There are {len(RemainingCarsList)} cars remaining.")
-#         Reports.append(TextReportAtI)
-#     return Reports
-#
-#
-# TextReports = ListChangeReport(10)
-# for i in range(len(TextReports) - 1):
-#     print(TextReports[i])
-
-# CarsGotOffHere = SubtractingThisTime[2]
-# NumberCarsGetOffHere = SubtractingThisTime[1]
-# print(CarsGotOffHere, NumberCarsGetOffHere)
