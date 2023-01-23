@@ -4,7 +4,22 @@ import pandas as pd
 import csv
 
 # TODO: MAKE IT GENERALIZABLE
-ProjectData = pd.read_csv('ProjectData.csv')
+StartingTotal = 3100
+NewData = {
+    'Highway Segment': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    '6-7 CHANGE': [0, -650, 400, 700, -300, 350, 0 - 150, 250, 0 - 150, 850],
+}
+
+NewData['6-7 TOTAL'] = [sum([StartingTotal] + NewData['6-7 CHANGE'][1:i+1]) for i in range(len(NewData['6-7 CHANGE']))]
+
+print(NewData['6-7 TOTAL'])
+
+
+df = pd.DataFrame(NewData)
+
+df.to_csv("C:/Users/blaze/OneDrive/Documents/Seth - Stochastic Modelling Project/NewData.csv")
+ProjectData = pd.read_csv('NewData.csv')
+
 HighwaySegmentsList = ProjectData["Highway Segment"]
 SixToSevenChanges = ProjectData["6-7 CHANGE"]
 SixToSevenTotal = ProjectData["6-7 TOTAL"]
@@ -51,10 +66,10 @@ def CreateNewCar(OnRamp):
     Car = [OnRamp, CarColor]
     return Car
 
+
 # CurrentOnRamp = HighwaySegmentsList[0][0]
 # CurrentOnRampPlus = int(CurrentOnRamp) + 1
 MaxCars6To7 = SixToSevenTotal[1]
-
 
 
 def AddCar(CurrentOnRamp):
@@ -142,21 +157,18 @@ def CorrectForNextExit(Exit, OnRamp):
             NumYellows = len(YellowCars)
             NumReds = len(RedCars)
             Reports = (f"At Exit Number {Exit}, "
-                             f"{NumberCarsGetOffHere} cars exited the highway. \n"
-                             f"Of the cars that got off, there were "
-                             f"{NumYellows} yellow cars, {NumBlues} blue cars, "
-                             f"{NumGreens} green cars, {NumReds} red cars, "
-                             f"and {NumPurples} purple cars. \n"
-                             f"There are {len(CorrectCarList)} cars remaining.")
+                       f"{NumberCarsGetOffHere} cars exited the highway. \n"
+                       f"Of the cars that got off, there were "
+                       f"{NumYellows} yellow cars, {NumBlues} blue cars, "
+                       f"{NumGreens} green cars, {NumReds} red cars, "
+                       f"and {NumPurples} purple cars. \n"
+                       f"There are {len(CorrectCarList)} cars remaining.")
         return CorrectCarList, Reports
 
 
 for MyIterable in range(1, 10):
     FCarList = CorrectForNextExit(MyIterable, 1)
     print(FCarList[1])
-
-
-
 
 # def ListCreation():
 #     for i in range(len(HighwaySegmentsList)):
