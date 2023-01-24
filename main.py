@@ -4,7 +4,7 @@ import pandas as pd
 import csv
 
 # TODO: RUN A MILLION TIMES, ALSO ADD ANIMATION
-StartingTotal = 4400
+StartingTotal = 6500
 CustomChange1 = randrange(-1000, 1000)
 CustomChange2 = randrange(-1000, 1000)
 CustomChange3 = randrange(-1000, 1000)
@@ -14,7 +14,8 @@ CustomChange6 = randrange(-1000, 1000)
 CustomChange7 = randrange(-1000, 1000)
 CustomChange8 = randrange(-1000, 1000)
 CustomChange9 = randrange(-1000, 1000)
-OriginalChanges = [0, -650, 400, 700, -300, 350, -150, 250, -150, 850]
+
+RealLifeChanges = [0, -650, 400, 700, -300, 350, -150, 250, -150, 850]
 
 CustomChanges = [0, CustomChange1, CustomChange2, CustomChange3, CustomChange4, CustomChange5, CustomChange6,
                  CustomChange7, CustomChange8, CustomChange9]
@@ -97,11 +98,16 @@ for i in range(2900):
     CorrectCarList.append(AddCar(0))
 
 
+# TODO: Comment out text "Reports", remake it with just numbers and then assign it to the dataframe to be added to the CSV
 def CorrectForNextExit(Exit, OnRamp):
     NotEqual = len(CorrectCarList) != SixToSevenTotal[Exit]
+    CarsRemaining = len(CorrectCarList)
     CarsGettingOffHere = []
     CarsGettingOnHere = []
     Reports = []
+    Colors = 0
+    GotOffCount = "No cars exited the highway."
+    GotOnCount = "No Cars entered the highway."
     while NotEqual:
         # NotEqual = len(CorrectCarList) != SixToSevenTotal[Exit]
         LessThanNeeded = len(CorrectCarList) < SixToSevenTotal[Exit]
@@ -113,81 +119,91 @@ def CorrectForNextExit(Exit, OnRamp):
                 NewCar = NewCar[0]
                 CorrectCarList.append([NewCar])
                 CarsGettingOnHere.append(NewCar)
-            YellowCars = []
-            BlueCars = []
-            GreenCars = []
-            RedCars = []
-            PurpleCars = []
+            NumYellows = 0
+            NumBlues = 0
+            NumGreens = 0
+            NumReds = 0
+            NumPurples = 0
             NumberCarsGetOnHere = len(CarsGettingOnHere)
             for i in range(len(CarsGettingOnHere)):
                 if CarsGettingOnHere[i][1] == "Yellow":
-                    YellowCars.append(CarsGettingOnHere[i])
+                    NumYellows += 1
                 if CarsGettingOnHere[i][1] == "Blue":
-                    BlueCars.append(CarsGettingOnHere[i])
+                    NumBlues += 1
                 if CarsGettingOnHere[i][1] == "Green":
-                    GreenCars.append(CarsGettingOnHere[i])
+                    NumGreens += 1
                 if CarsGettingOnHere[i][1] == "Red":
-                    RedCars.append(CarsGettingOnHere[i])
+                    NumReds += 1
                 if CarsGettingOnHere[i][1] == "Purple":
-                    PurpleCars.append(CarsGettingOnHere[i])
-            NumPurples = len(PurpleCars)
-            NumGreens = len(GreenCars)
-            NumBlues = len(BlueCars)
-            NumYellows = len(YellowCars)
-            NumReds = len(RedCars)
+                    NumPurples += 1
+            CarsRemaining = len(CorrectCarList)
+            Colors = [NumYellows, NumBlues, NumGreens, NumReds, NumPurples]
+            GotOnCount = f"{NumberCarsGetOnHere} entered the highway."
             Reports = (f"At Exit Number {Exit}, "
                        f"{NumberCarsGetOnHere} cars entered the highway. \n"
                        f"Of the cars that got on, there were "
                        f"{NumYellows} yellow cars, {NumBlues} blue cars, "
                        f"{NumGreens} green cars, {NumReds} red cars, "
                        f"and {NumPurples} purple cars. \n"
-                       f"There are now {len(CorrectCarList)} cars on the highway.")
+                       f"There are now {CarsRemaining} cars on the highway.")
 
         if GreaterThanNeeded:
             Difference = len(CorrectCarList) - SixToSevenTotal[Exit]
             for i in range(Difference):
                 CarLeaving = (CorrectCarList.pop())
                 CarsGettingOffHere.append(CarLeaving)
-            YellowCars = []
-            BlueCars = []
-            GreenCars = []
-            RedCars = []
-            PurpleCars = []
+            NumYellows = 0
+            NumBlues = 0
+            NumGreens = 0
+            NumReds = 0
+            NumPurples = 0
             NumberCarsGetOffHere = len(CarsGettingOffHere)
             for i in range(len(CarsGettingOffHere)):
                 if CarsGettingOffHere[i][0][1] == "Yellow":
-                    YellowCars.append(CarsGettingOffHere[i])
+                    NumYellows += 1
                 if CarsGettingOffHere[i][0][1] == "Blue":
-                    BlueCars.append(CarsGettingOffHere[i])
+                    NumBlues += 1
                 if CarsGettingOffHere[i][0][1] == "Green":
-                    GreenCars.append(CarsGettingOffHere[i])
+                    NumGreens += 1
                 if CarsGettingOffHere[i][0][1] == "Red":
-                    RedCars.append(CarsGettingOffHere[i])
+                    NumReds += 1
                 if CarsGettingOffHere[i][0][1] == "Purple":
-                    PurpleCars.append(CarsGettingOffHere[i])
-            NumPurples = len(PurpleCars)
-            NumGreens = len(GreenCars)
-            NumBlues = len(BlueCars)
-            NumYellows = len(YellowCars)
-            NumReds = len(RedCars)
+                    NumPurples += 1
+            Colors = [NumYellows, NumBlues, NumGreens, NumReds, NumPurples]
+            CarsRemaining = len(CorrectCarList)
             Reports = (f"At Exit Number {Exit}, "
                        f"{NumberCarsGetOffHere} cars exited the highway. \n"
                        f"Of the cars that got off, there were "
                        f"{NumYellows} yellow cars, {NumBlues} blue cars, "
                        f"{NumGreens} green cars, {NumReds} red cars, "
                        f"and {NumPurples} purple cars. \n"
-                       f"There are {len(CorrectCarList)} cars remaining.")
+                       f"There are {CarsRemaining} cars remaining.")
+            GotOffCount = f"{NumberCarsGetOffHere} cars exited the highway."
         if len(Reports) == 0:
+            Colors = ("You'll never see this. And it's not because I don't want you to... just that this can't occur."
+                      "You're in a dream, you know.")
             Reports.append(["You are at the last stop, which is theoretically impossible, because this code will "
                             "never reach this. It is a mathematical impossibility. This should be impossible, "
                             "this line is just here so that it prints... SOMETHING instead of an error. You know that "
                             "feeling, don't you, dear reader?"])
-        return CorrectCarList, Reports
+        return CorrectCarList, Reports, Colors, GotOnCount, GotOffCount, CarsRemaining
 
+ResultDataIterable = {
 
+}
+ResultData = {
+    'ColorReports': [],
+    'EnterReports': [],
+    ''
+    
+    'TextReports': []
+}
 for MyIterable in range(1, 10):
     FCarList = CorrectForNextExit(MyIterable, 1)
-    print(FCarList[1])
+    ResultData['TextReports'].append(FCarList[1])
+
+print(ResultData)
+
 
 # def ListCreation():
 #     for i in range(len(HighwaySegmentsList)):
